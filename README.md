@@ -1,5 +1,5 @@
 # Product Query API
-API for search product
+API for search product and consume queue from Product Command API (https://github.com/mynameismail/casestudy-product-command-api)
 
 ## setup
 - create database
@@ -10,6 +10,8 @@ API for search product
 
 ## serve
 - run `php artisan serve`
+- run `php artisan queue:consume add_category`
+- run `php artisan queue:consume add_product`
 
 ## test
 - (optional) create database
