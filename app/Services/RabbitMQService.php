@@ -17,8 +17,20 @@ class RabbitMQService
         );
         $channel = $connection->channel();
 
-        $callback = function ($msg) {
+        $callback = function ($msg) use ($queue) {
             echo ' [x] Received ', $msg->body, "\n";
+
+            $payload = json_decode($msg->body, true);
+
+            switch ($queue) {
+                case 'add_category':
+                    (new CategoryService())->add($payload);
+                    break;
+                    
+                case 'add_product':
+                    (new ProductService())->add($payload);
+                    break;
+            }
         };
 
         $channel->queue_declare($queue, false, false, false, false);
