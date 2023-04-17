@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use App\Http\Resources\ProductCollection;
 use App\Http\Resources\ProductResource;
 use App\Models\Product;
 
@@ -50,13 +51,6 @@ class ProductController extends Controller
         $pageSize = 10;
         $products = $query->paginate($pageSize);
 
-        return response()->json([
-            'data' => ProductResource::collection($products),
-            'paging' => [
-                'size' => $pageSize,
-                'total' => $products->lastPage(),
-                'current' => $products->currentPage(),
-            ],
-        ]);
+        return response()->json(new ProductCollection($products));
     }
 }
